@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build --config vite.config.ts && vite build --config vite.config.content_script.ts",
+    "build_content_scripts": "tsc -b && vite build --config vite.config.content_script.ts",
+    "build_normal": "tsc -b && vite build --config vite.config.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "chokidar": "chokidar \"src/**/*\" -c \"npm run build\""
+    "chokidar": "chokidar \"src/**/*\" -c \"npm run build\"",
+    "chokidar_content_scripts": "chokidar \"src/content_scripts/*\" -c \"npm run build_content_scripts\"",
+    "chokidar_normal": "chokidar \"src/**/*\" -i \"src/content_scripts/**/*\" -c \"npm run build_normal\""
   },
   "dependencies": {
     "react": "^18.3.1",

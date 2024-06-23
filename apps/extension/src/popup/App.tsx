@@ -1,3 +1,4 @@
+import "./App.css"
 console.log("asdasd")
 
 function App() {

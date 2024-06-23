@@ -1,15 +1,41 @@
-// import background2 from "./background2"
+import communicator, { Payload } from "../shared/utils/Communicator";
+import MediaHelper from "../shared/utils/MediaHelper";
 
-console.log("0 details")
-browser.webNavigation.onCompleted.addListener(details=>{
-	browser.tabs.executeScript(details.tabId,{
-		file: "./background2.js"
-	})
-	console.log("details",details)
+communicator.onMessage(async payload => {
+	console.log("payload", payload)
+
+	// Create and populate formData 
+	const formData = new FormData()
+	await populateFormData(formData, payload)
+
+	// Post
+	await postToLocalhost(formData)
 })
 
-// background2()
-// console.log("background.ts here!2")
+async function populateFormData(formData: FormData, payload: Payload) {
+	console.log("payload", payload)
+	// Add file
+	if (payload.file) formData.append("files", payload.file)
+	if (payload.url) {
+		const file = await MediaHelper.getFileFromUrl(payload.url)
+		formData.append("files", file)
+	}
 
-// browser.tabs.executeScript
-// browser.scripting.executeScript
+	// Add tags
+	payload.tags.forEach(tag => {
+		formData.append("tags[]", tag)
+	})
+}
+
+async function postToLocalhost(formData: FormData) {
+	try {
+		const res = await fetch("http://localhost:8085/save/attached-media", {
+			method: "POST",
+			body: formData,
+		})
+		console.log("Posted image and tags successfully")
+		return res
+	} catch (err) {
+		throw new Error(`ERROR when posting to localhost. err: ${err}`)
+	}
+}
