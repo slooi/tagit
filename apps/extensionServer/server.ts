@@ -21,6 +21,15 @@ function mimeToExtension(mimeType: keyof typeof mimeToExtensionDict) {
 const PORT = 8085
 
 const app = express()
+
+app.use((req, res, next) => {
+	console.log(`${req.method} ${req.path} HIT!`)
+	if (req.method === "POST") {
+		console.log("req.body", req.body)
+	}
+	next()
+})
+
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, 'uploads/')
@@ -37,10 +46,7 @@ const upload = multer({ storage: storage }); // Set up uploads directory
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-	console.log(req.headers)
-	const message = "/ hit"
-	console.log(message)
-	res.send(message)
+	res.send("/ hit")
 })
 
 app.post("/save/attached-media", upload.array('file'), (req, res) => {
