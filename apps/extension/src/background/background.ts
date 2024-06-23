@@ -1,3 +1,3 @@
-browser.runtime.onMessage.addListener(msg => {
-	console.log("onMessage msg:", msg)
-})
+import Communicator from "../shared/Communicator";
+
+Communicator.onMessage(payload => console.log("payload", payload))
