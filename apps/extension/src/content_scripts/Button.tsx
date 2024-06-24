@@ -10,7 +10,8 @@ export default function Button() {
 		backgroundColor: "rgba(180,180,180,0.6)",
 		margin: "0px",
 		padding: "0px",
-		fontSize: "15px",
-		pointerEvents: "auto"
-	}} onMouseDown={onClick}>I'm a button</button></>)
+		fontSize: "18px",
+		// pointerEvents: "auto",
+		whiteSpace: "nowrap"
+	}} onMouseDown={onClick}>Download</button ></>)
 }
