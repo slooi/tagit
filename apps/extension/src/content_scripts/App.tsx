@@ -9,7 +9,7 @@ const SMALLEST_MEDIA_DIMENSION = 80
 const LARGEST_MEDIA_DIMENSION = 150
 
 export default function App() {
-	const [images, setImages] = useState<MediaElement[]>(getMediaElements())
+	const [mediaElements, setMediaElement] = useState<MediaElement[]>(getMediaElements())
 
 	console.log("content_scripts.ts app ran")
 
@@ -18,9 +18,9 @@ export default function App() {
 	}
 
 	useEffect(() => {
-		const interval = setInterval(() => setImages(getMediaElements()), 333)
+		const interval = setInterval(() => setMediaElement(getMediaElements()), 333)
 		return () => clearTimeout(interval)
 	}, [])
 
-	return (<>{images.map((image, i) => <Panel key={i} image={image} />)}</>)
+	return (<>{mediaElements.map((mediaElement, i) => <Panel key={i} mediaElement={mediaElement} />)}</>)
 }
