@@ -7,11 +7,14 @@ type PanelProps = {
 export default function Panel({ mediaElement }: PanelProps) {
 
 	const boudingClientRect = mediaElement.getBoundingClientRect()
+	if (boudingClientRect.bottom < 0 || boudingClientRect.top > window.innerHeight) return <></>
 
 	return (
 		<>
 			<div style={{
-				position: "absolute"
+				position: "absolute",
+				top: boudingClientRect.y + scrollY,
+				left: boudingClientRect.x + scrollX,
 			}}>
 				<Button />
 				<Button />
