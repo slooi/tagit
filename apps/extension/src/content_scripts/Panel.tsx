@@ -1,7 +1,8 @@
+import { MediaElement } from "../shared/types/types.ts"
 import Button from "./Button.tsx"
 
 type PanelProps = {
-	image: HTMLImageElement
+	image: MediaElement
 }
 export default function Panel({ image }: PanelProps) {
 	return (<>

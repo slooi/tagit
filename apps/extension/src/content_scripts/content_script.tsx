@@ -10,6 +10,8 @@ app.style.top = "0px"
 app.style.left = "0px"
 app.style.zIndex = "10000000"
 
+app.style.pointerEvents = "none"
+
 if (!body) throw new Error("ERROR: body does not exist!")
 body.prepend(app)
 

@@ -1,4 +1,4 @@
-import Communicator from "../shared/Communicator";
+import Communicator from "../shared/utils/Communicator";
 
 Communicator.onMessage(payload => {
 	console.log("payload", payload)
