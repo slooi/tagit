@@ -18,7 +18,7 @@ export default function App() {
 	}
 
 	useEffect(() => {
-		const interval = setInterval(() => setMediaElement(getMediaElements()), 333)
+		const interval = setInterval(() => { setMediaElement(getMediaElements()) }, 33)
 		return () => clearTimeout(interval)
 	}, [])
 
