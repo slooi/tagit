@@ -15,10 +15,18 @@ export default function Panel({ mediaElement }: PanelProps) {
 				position: "absolute",
 				top: boudingClientRect.y + scrollY,
 				left: boudingClientRect.x + scrollX,
-			}}>
-				<Button />
-				<Button />
-				<Button />
+				pointerEvents: "none",
+				// backgroundColor: "red"
+			}}
+			>
+				<Button text={"just nice"} />
+				<Button text={"ro just nice"} />
+				<Button text={"inspiration"} />
+				<Button text={"ro inspiration"} />
+				<Button text={"drawing resources"} />
+				<Button text={"real drawing resources"} />
+				<Button text={"nh real drawing resources"} />
+				<Button text={"programming inspiration"} />
 			</div>
 		</>)
 }
