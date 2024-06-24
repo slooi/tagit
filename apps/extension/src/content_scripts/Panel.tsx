@@ -16,7 +16,6 @@ export default function Panel({ mediaElement }: PanelProps) {
 				top: boudingClientRect.y + scrollY,
 				left: boudingClientRect.x + scrollX,
 				pointerEvents: "none",
-				// backgroundColor: "red"
 			}}
 			>
 				<Button text={"just nice"} />
