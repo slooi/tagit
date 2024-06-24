@@ -1,5 +1,5 @@
-import Button from "./Button"
 import { useEffect, useState } from "react"
+import Panel from "./Panel"
 
 export default function App() {
 	console.log("content_scripts.ts app ran")
@@ -10,12 +10,5 @@ export default function App() {
 		return () => clearTimeout(interval)
 	}, [])
 
-
-	return (
-		<>
-			{
-				images.map((image, i) => <Button key={i} />)
-			}
-		</>
-	)
+	return (<>{images.map((image, i) => <Panel key={i} image={image} />)}</>)
 }

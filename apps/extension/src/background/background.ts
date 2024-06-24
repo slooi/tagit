@@ -6,4 +6,3 @@ Communicator.onMessage(payload => {
 		method: "POST"
 	})
 })
-
