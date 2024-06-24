@@ -29,3 +29,13 @@ export default defineConfig({
     }
   }
 })
+
+
+
+
+
+
+
+# ISSUES
+1. Because `import` keywords aren't allowed in the javascript content_script, I have to bundle `content_script.tsx` with the imported react code. Make two `vite.config.___.ts` files and make the `content_script.tsx` vite file have `inlineDynamicImports: true`
+2. Styles does not work for `content_scripts`. Importing styles does not make them appear in the transpiled js files for some reason
