@@ -4,7 +4,7 @@ import MediaHelper from "../shared/utils/MediaHelper";
 communicator.onMessage(async payload => {
 	console.log("payload", payload)
 
-	// append the file 
+	// append the formData 
 	const formData = new FormData()
 	if (payload.file) {
 		formData.append("files", payload.file)
@@ -14,7 +14,9 @@ communicator.onMessage(async payload => {
 	} else {
 		throw new Error("NOT IMPLEMENTED")
 	}
-	// formData.append("tags", new Blob(payload.tags, { type: "text/plain" }))
+	payload.tags.forEach(tag => {
+		formData.append("tags[]", tag)
+	})
 
 	// 
 	await postToLocalhost(formData)
