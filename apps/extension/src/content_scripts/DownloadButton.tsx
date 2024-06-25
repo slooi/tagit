@@ -5,7 +5,7 @@ type ButtonProps = {
 	callback: (...args: any[]) => void
 }
 
-export default function Button({ text, callback }: ButtonProps) {
+export default function DownloadButton({ text, callback }: ButtonProps) {
 	const [isClickable, setIsClickable] = useState(true)
 
 	function onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {

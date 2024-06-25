@@ -1,6 +1,6 @@
 import { MediaElement } from "../shared/types/types.ts"
 import communicator from "../shared/utils/Communicator.ts"
-import Button from "./Button.tsx"
+import DownloadButton from "./DownloadButton.tsx"
 
 // constants
 import tags from "../shared/constants/tags.config.ts"
@@ -13,46 +13,46 @@ type PanelProps = {
 export default function Panel({ mediaElement }: PanelProps) {
 	const [blob, setBlob] = useState<Blob>()
 
+	// Check if panel should display
 	const boudingClientRect = mediaElement.getBoundingClientRect()
 	if (boudingClientRect.bottom < 0 || boudingClientRect.top > window.innerHeight) return <></>
 
-	const handleClick = async (tag: typeof tags[number]) => {
+	// 
+	// if (mediaElement.src === "") containerStyle.backgroundColor = "rgba(255,0,0,0.6)"
+	// if (mediaElement.src.startsWith("blob:")) containerStyle.backgroundColor = "rgba(255,160,0,0.6)"
+	// if (mediaElement instanceof HTMLVideoElement) containerStyle.border = "2px dashed rgba(0,0,0,0.6)"
 
+	// HANDLERS
+	const handleClick = async (tag: typeof tags[number]) => {
 		if (!blob) {
 			// fetch blob
 			try {
 				console.log("SENDING")
-				const res = await fetch("https://images.squarespace-cdn.com/content/v1/5f90ff6a5f71bf45a0c0256c/1606871553343-3NUCEHB5S1N3VAEVSLGT/autism+bubble.jpg")
+				const res = await fetch(mediaElement.src)
 				const blobResponse = await res.blob()
 
 				console.log("I HAVE THE BLOB")
 				setBlob(blobResponse)
-			} catch (err) {
-				throw new Error("ERROR: " + err)
-			}
+			} catch (err) { throw new Error("ERROR: " + err) }
 		}
 
-		if (blob) {
-			communicator.sendMessage({
-				blob: blob,
-				tags: [tag],
-			})
-		}
-
+		blob && communicator.sendMessage({ blob: blob, tags: [tag] })
 	}
+
+	// Style
+	const containerStyle = {
+		position: "absolute",
+		top: boudingClientRect.y + scrollY,
+		left: boudingClientRect.x + scrollX,
+		pointerEvents: "none",
+	} as React.CSSProperties
 
 	return (
 		<>
-			<div style={{
-				position: "absolute",
-				top: boudingClientRect.y + scrollY,
-				left: boudingClientRect.x + scrollX,
-				pointerEvents: "none",
-			}}
+			<div style={containerStyle}
 			>
 				{tags.map(tag => (
-					<Button key={tag} text={tag} callback={() => handleClick(tag)
-					} />
+					<DownloadButton key={tag} text={tag} callback={() => handleClick(tag)} />
 				))}
 			</div>
 		</>)
