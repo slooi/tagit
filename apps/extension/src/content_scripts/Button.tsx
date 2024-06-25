@@ -1,18 +1,16 @@
-import Communicator from "../shared/utils/Communicator.ts"
+import Communicator from "../shared/libs/Communicator.ts"
 import { useEffect, useState } from "react"
 type ButtonProps = {
-	text: string
+	text: string,
+	callback: (...args: any[]) => void
 }
 
-export default function Button({ text }: ButtonProps) {
+export default function Button({ text, callback }: ButtonProps) {
 	const [isClickable, setIsClickable] = useState(true)
 
 	function onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-		e.stopPropagation()
-		e.preventDefault()
 		console.log("Hello button clicked!")
-		Communicator.sendMessage(1)
-		return false
+		callback()
 	}
 
 	useEffect(() => {
