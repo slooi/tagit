@@ -8,10 +8,10 @@ export type UrlPayload = {
 	tags: typeof tags[number][]
 }
 
-export type BlobPayload = {
-	blob: Blob,
+export type FilePayload = {
+	file: File,
 	tags: typeof tags[number][]
 }
 
-const communicator = Communicator.getInstance<XOR<UrlPayload, BlobPayload>>()
+const communicator = Communicator.getInstance<XOR<UrlPayload, FilePayload>>()
 export default communicator

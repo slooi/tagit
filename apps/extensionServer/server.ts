@@ -56,6 +56,7 @@ app.post("/save/attached-media", upload.array('files'), (req, res) => {
 
 	console.log("req.files")
 	console.log(req.files)
+	console.log("req", req)
 	res.send('File uploaded successfully!');
 })
 app.post("/save/external-media", (req, res) => {
