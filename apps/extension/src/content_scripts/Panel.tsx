@@ -2,6 +2,10 @@ import { MediaElement } from "../shared/types/types.ts"
 import communicator from "../shared/utils/Communicator.ts"
 import Button from "./Button.tsx"
 
+// constants
+import tags from "../shared/constants/tags.config.ts"
+
+// 
 type PanelProps = {
 	mediaElement: MediaElement
 }
@@ -19,14 +23,9 @@ export default function Panel({ mediaElement }: PanelProps) {
 				pointerEvents: "none",
 			}}
 			>
-				<Button text={"just nice"} callback={(() => communicator.sendMessage("just nice"))} />
-				{/* <Button text={"ro just nice"} />
-				<Button text={"inspiration"} />
-				<Button text={"ro inspiration"} />
-				<Button text={"drawing resources"} />
-				<Button text={"real drawing resources"} />
-				<Button text={"nh real drawing resources"} />
-				<Button text={"programming inspiration"} /> */}
+				{tags.map(tag => (
+					<Button key={tag} text={tag} callback={(() => communicator.sendMessage(tag))} />
+				))}
 			</div>
 		</>)
 }
