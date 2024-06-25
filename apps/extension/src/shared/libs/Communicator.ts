@@ -1,17 +1,17 @@
 
-export default class Communicator<Payload> {
-	private static _instance: Communicator<unknown>
+export default class Communicator<T> {
+	private static _instance: Communicator<any>
 
 	private constructor() { }
 
-	public static getInstance<Payload>() {
-		return this._instance || (this._instance = new this<Payload>())
+	public static getInstance<T>(): Communicator<T> {
+		return this._instance || (this._instance = new this<T>())
 	}
 
-	onMessage(cb: (payload: Payload, sender: browser.runtime.MessageSender, sendResponse: (response?: any) => void) => boolean | void | Promise<any>) {
+	onMessage(cb: (payload: T, sender: browser.runtime.MessageSender, sendResponse: (response?: any) => void) => boolean | void | Promise<any>) {
 		browser.runtime.onMessage.addListener(cb)
 	}
-	sendMessage(payload: Payload) {
+	sendMessage(payload: T) {
 		browser.runtime.sendMessage(payload)
 	}
 }

@@ -1,5 +1,17 @@
+import tags from "../constants/tags.config";
 import Communicator from "../libs/Communicator";
-import Payload from "../payloads/payloads";
+import { XOR } from "../types/types";
 
-const communicator = Communicator.getInstance<Payload>()
+
+export type UrlPayload = {
+	url: string,
+	tags: typeof tags[number][]
+}
+
+export type BlobPayload = {
+	blob: Blob,
+	tags: typeof tags[number][]
+}
+
+const communicator = Communicator.getInstance<XOR<UrlPayload, BlobPayload>>()
 export default communicator

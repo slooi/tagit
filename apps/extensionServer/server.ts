@@ -49,14 +49,12 @@ app.get("/", (req, res) => {
 	res.send("/ hit")
 })
 
-app.post("/save/attached-media", upload.array('file'), (req, res) => {
+app.post("/save/attached-media", upload.array('files'), (req, res) => {
 	if (!req.files) {
 		return res.status(400).send('No file uploaded.');
 	}
 
-	console.log(req.params)
-	console.log(req.query)
-	console.log(req.body)
+	console.log("req.files")
 	console.log(req.files)
 	res.send('File uploaded successfully!');
 })
