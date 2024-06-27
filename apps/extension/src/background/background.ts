@@ -4,17 +4,21 @@ import MediaHelper from "../shared/utils/MediaHelper";
 communicator.onMessage(async payload => {
 	console.log("payload", payload)
 
-	// append the formData 
+	// Create and populate formData 
 	const formData = new FormData()
-	appendFormData(formData, payload)
+	await populateFormData(formData, payload)
 
-	// 
+	// Post
 	await postToLocalhost(formData)
 })
 
-function appendFormData(formData: FormData, payload: Payload) {
+async function populateFormData(formData: FormData, payload: Payload) {
+	// Add file
 	if (payload.file) formData.append("files", payload.file)
-	if (payload.url) throw new Error("NOT IMPLEMENTED")
+	if (payload.url) {
+		const file = await MediaHelper.getFileFromNormalUrl(payload.url)
+		formData.append("files", file)
+	}
 
 	// Add tags
 	payload.tags.forEach(tag => {
@@ -31,6 +35,6 @@ async function postToLocalhost(formData: FormData) {
 		console.log("Posted image and tags successfully")
 		return res
 	} catch (err) {
-		throw new Error("ERROR when posting to localhost")
+		throw new Error(`ERROR when posting to localhost. err: ${err}`)
 	}
 }

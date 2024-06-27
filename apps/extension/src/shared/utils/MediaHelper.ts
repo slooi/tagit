@@ -30,6 +30,15 @@ export default class MediaHelper {
 			return file
 		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
 	}
+	// normal url -> file
+	public static async getFileFromNormalUrl(url: string) {
+		try {
+			const blob = await (await fetch(url)).blob()
+			const file = new File([blob], MediaHelper.getImageNameFromUrl(url), { type: blob.type })
+
+			return file
+		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
+	}
 
 	// basic
 	public static getImageTypeFromURL(url: string): ImageTypes {

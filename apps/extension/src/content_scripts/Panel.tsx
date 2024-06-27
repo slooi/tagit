@@ -34,7 +34,8 @@ export default function Panel({ mediaElement }: PanelProps) {
 				break;
 			}
 			case ImageTypes.NORMAL: {
-				throw new Error("NOT IMPLEMENTED!")
+				console.log("heyheya!")
+				communicator.sendMessage({ url, tags: [tag] })
 				break;
 			}
 			default:
