@@ -11,17 +11,24 @@
 // 	*/
 export default class MediaHelper {
 	// Download Strategies
+	// blob url -> file
 	public static async getFileFromBlobUrl(url: string) {
 		try {
 			// Get file
-			const res = await fetch(url)
-			const blobResponse = await res.blob()
+			const blobResponse = await (await fetch(url)).blob()
 			const file = new File([blobResponse], MediaHelper.getImageNameFromUrl(url), { type: blobResponse.type })
 
 			return file
-		} catch (err) {
-			throw new Error("ERROR while trying to get file from blob!")
-		}
+		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
+	}
+	// data url -> file
+	public static async getFileFromDataUrl(url: string) {
+		try {
+			const blob = await (await fetch(url)).blob()
+			const file = new File([blob], MediaHelper.getImageNameFromUrl(url), { type: blob.type })
+
+			return file
+		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
 	}
 
 	// basic

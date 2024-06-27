@@ -13,5 +13,6 @@ export type FilePayload = {
 	tags: typeof tags[number][]
 }
 
-const communicator = Communicator.getInstance<XOR<UrlPayload, FilePayload>>()
+export type Payload = XOR<UrlPayload, FilePayload>
+const communicator = Communicator.getInstance<Payload>()
 export default communicator

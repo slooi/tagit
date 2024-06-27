@@ -19,13 +19,26 @@ export default function Panel({ mediaElement }: PanelProps) {
 
 
 	// HANDLERS
-	const handleClick = async (tag: typeof tags[number]) => {
+	const sendPayloadToBackground = async (tag: typeof tags[number]) => {
 		const url = mediaElement.src
-		if (MediaHelper.getImageTypeFromURL(url) === ImageTypes.BLOB) {
-			const file = await MediaHelper.getFileFromBlobUrl(url)
-			communicator.sendMessage({ file, tags: [tag] })
-		} else {
-			communicator.sendMessage({ url, tags: [tag] })
+
+		switch (MediaHelper.getImageTypeFromURL(url)) {
+			case ImageTypes.BLOB: {
+				const file = await MediaHelper.getFileFromBlobUrl(url)
+				communicator.sendMessage({ file, tags: [tag] })
+				break;
+			}
+			case ImageTypes.DATA: {
+				const file = await MediaHelper.getFileFromDataUrl(url)
+				communicator.sendMessage({ file, tags: [tag] })
+				break;
+			}
+			case ImageTypes.NORMAL: {
+				throw new Error("NOT IMPLEMENTED!")
+				break;
+			}
+			default:
+				throw new Error("THIS SHOULD NEVER RUN!")
 		}
 	}
 
@@ -39,7 +52,7 @@ export default function Panel({ mediaElement }: PanelProps) {
 			}}
 			>
 				{tags.map(tag => (
-					<DownloadButton key={tag} text={tag} callback={() => handleClick(tag)} mediaElement={mediaElement} />
+					<DownloadButton key={tag} text={tag} callback={() => sendPayloadToBackground(tag)} mediaElement={mediaElement} />
 				))}
 			</div>
 		</>)

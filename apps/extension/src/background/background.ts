@@ -1,4 +1,4 @@
-import communicator from "../shared/utils/Communicator";
+import communicator, { Payload } from "../shared/utils/Communicator";
 import MediaHelper from "../shared/utils/MediaHelper";
 
 communicator.onMessage(async payload => {
@@ -6,21 +6,21 @@ communicator.onMessage(async payload => {
 
 	// append the formData 
 	const formData = new FormData()
-	if (payload.file) {
-		formData.append("files", payload.file)
-	} else if (payload.url) {
-		// MediaHelper.
-		throw new Error("NOT IMPLEMENTED")
-	} else {
-		throw new Error("NOT IMPLEMENTED")
-	}
-	payload.tags.forEach(tag => {
-		formData.append("tags[]", tag)
-	})
+	appendFormData(formData, payload)
 
 	// 
 	await postToLocalhost(formData)
 })
+
+function appendFormData(formData: FormData, payload: Payload) {
+	if (payload.file) formData.append("files", payload.file)
+	if (payload.url) throw new Error("NOT IMPLEMENTED")
+
+	// Add tags
+	payload.tags.forEach(tag => {
+		formData.append("tags[]", tag)
+	})
+}
 
 async function postToLocalhost(formData: FormData) {
 	try {
