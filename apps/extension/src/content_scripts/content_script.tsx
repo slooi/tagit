@@ -11,7 +11,6 @@ reactRoot.style.left = "0px"
 reactRoot.style.zIndex = "10000000"
 reactRoot.style.width = "100%"
 
-reactRoot.style.overflowX = "hidden"
 reactRoot.style.pointerEvents = "none"
 
 if (!body) throw new Error("ERROR: body does not exist!")
