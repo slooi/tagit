@@ -17,7 +17,7 @@ async function populateFormData(formData: FormData, payload: Payload) {
 	// Add file
 	if (payload.file) formData.append("files", payload.file)
 	if (payload.url) {
-		const file = await MediaHelper.getFileFromNormalUrl(payload.url)
+		const file = await MediaHelper.getFileFromUrl(payload.url)
 		formData.append("files", file)
 	}
 

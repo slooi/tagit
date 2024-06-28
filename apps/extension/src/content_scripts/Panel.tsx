@@ -1,5 +1,5 @@
 import { MediaElement } from "../shared/types/types.ts"
-import communicator from "../shared/utils/Communicator.ts"
+import communicator, { Payload } from "../shared/utils/Communicator.ts"
 import DownloadButton from "./DownloadButton.tsx"
 
 // constants
@@ -21,25 +21,19 @@ export default function Panel({ mediaElement }: PanelProps) {
 	// HANDLERS
 	const sendPayloadToBackground = async (tag: typeof tags[number]) => {
 		const url = mediaElement.src
+		const imageType = MediaHelper.getImageTypeFromURL(url);
 
-		switch (MediaHelper.getImageTypeFromURL(url)) {
-			case ImageTypes.BLOB: {
-				const file = await MediaHelper.getFileFromBlobUrl(url)
-				communicator.sendMessage({ file, tags: [tag] })
-				break;
-			}
-			case ImageTypes.DATA: {
-				const file = await MediaHelper.getFileFromDataUrl(url)
-				communicator.sendMessage({ file, tags: [tag] })
-				break;
-			}
-			case ImageTypes.NORMAL: {
-				communicator.sendMessage({ url, tags: [tag] })
-				break;
-			}
-			default:
-				throw new Error("THIS SHOULD NEVER RUN!")
-		}
+		// Create the payload based on image type.
+		let payload: Payload | undefined;
+		const imageIsDataOrBlob = imageType === ImageTypes.DATA || imageType === ImageTypes.BLOB
+		const imageIsNormal = imageType === ImageTypes.NORMAL
+
+		if (imageIsDataOrBlob) payload = { file: await MediaHelper.getFileFromUrl(url), tags: [tag] }
+		if (imageIsNormal) payload = { url, tags: [tag] }
+		if (!payload) throw new Error(`Invalid image type! url: ${url}`)
+
+		// Send the payload.
+		communicator.sendMessage(payload);
 	}
 
 	return (

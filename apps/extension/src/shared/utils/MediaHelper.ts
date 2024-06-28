@@ -10,29 +10,10 @@
 // 		normal url images - get from background.js (cross origin)
 // 	*/
 export default class MediaHelper {
-	// Download Strategies
-	// blob url -> file
-	public static async getFileFromBlobUrl(url: string) {
+	// This downloads, data, blob and normal url images
+	public static async getFileFromUrl(url: string) {
 		try {
 			// Get file
-			const blobResponse = await (await fetch(url)).blob()
-			const file = new File([blobResponse], MediaHelper.getImageNameFromUrl(url), { type: blobResponse.type })
-
-			return file
-		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
-	}
-	// data url -> file
-	public static async getFileFromDataUrl(url: string) {
-		try {
-			const blob = await (await fetch(url)).blob()
-			const file = new File([blob], MediaHelper.getImageNameFromUrl(url), { type: blob.type })
-
-			return file
-		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
-	}
-	// normal url -> file
-	public static async getFileFromNormalUrl(url: string) {
-		try {
 			const blob = await (await fetch(url)).blob()
 			const file = new File([blob], MediaHelper.getImageNameFromUrl(url), { type: blob.type })
 
