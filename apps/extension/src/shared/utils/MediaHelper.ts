@@ -18,7 +18,7 @@ export default class MediaHelper {
 			const file = new File([blob], MediaHelper.getImageNameFromUrl(url), { type: blob.type })
 
 			return file
-		} catch (err) { throw new Error("ERROR while trying to get file from blob!") }
+		} catch (err) { throw new Error("ERROR while trying to get file from url!") }
 	}
 
 	// basic
