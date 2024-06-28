@@ -13,6 +13,7 @@ communicator.onMessage(async payload => {
 })
 
 async function populateFormData(formData: FormData, payload: Payload) {
+	console.log("payload", payload)
 	// Add file
 	if (payload.file) formData.append("files", payload.file)
 	if (payload.url) {

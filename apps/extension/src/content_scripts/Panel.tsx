@@ -34,7 +34,6 @@ export default function Panel({ mediaElement }: PanelProps) {
 				break;
 			}
 			case ImageTypes.NORMAL: {
-				console.log("heyheya!")
 				communicator.sendMessage({ url, tags: [tag] })
 				break;
 			}
@@ -49,9 +48,10 @@ export default function Panel({ mediaElement }: PanelProps) {
 				position: "absolute",
 				top: boudingClientRect.y + scrollY,
 				left: boudingClientRect.x + scrollX,
-				pointerEvents: "none",
 			}}
 			>
+				<button
+					onClick={() => { console.log("hello guys") }}>hello world</button>
 				{tags.map(tag => (
 					<DownloadButton key={tag} text={tag} callback={() => sendPayloadToBackground(tag)} mediaElement={mediaElement} />
 				))}
