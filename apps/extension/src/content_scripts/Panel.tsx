@@ -4,7 +4,6 @@ import DownloadButton from "./DownloadButton.tsx"
 
 // constants
 import tags from "../shared/constants/tags.config.ts"
-import { useEffect, useState } from "react"
 import MediaHelper, { ImageTypes } from "../shared/utils/MediaHelper.ts"
 
 // 

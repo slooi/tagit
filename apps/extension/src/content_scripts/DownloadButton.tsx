@@ -1,6 +1,5 @@
 import { ORANGE_ALPHA } from "../shared/constants/color.ts"
-import Communicator from "../shared/libs/Communicator.ts"
-import { useEffect, useState } from "react"
+
 type ButtonProps = {
 	text: string,
 	callback: (...args: any[]) => void,
