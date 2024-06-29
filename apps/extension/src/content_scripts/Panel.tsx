@@ -43,8 +43,6 @@ export default function Panel({ mediaElement }: PanelProps) {
 				left: boudingClientRect.x + scrollX,
 			}}
 			>
-				<button
-					onClick={() => { console.log("hello guys") }}>hello world</button>
 				{tags.map(tag => (
 					<DownloadButton key={tag} text={tag} callback={() => sendPayloadToBackground(tag)} mediaElement={mediaElement} />
 				))}
