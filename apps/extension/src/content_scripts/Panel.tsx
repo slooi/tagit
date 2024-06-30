@@ -20,16 +20,26 @@ export default function Panel({ mediaElement }: PanelProps) {
 	// HANDLERS
 	const sendPayloadToBackground = async (tag: typeof tags[number]) => {
 		const url = mediaElement.src
-		const imageType = MediaHelper.getImageTypeFromURL(url);
 
 		// Create the payload based on image type.
 		let payload: Payload | undefined;
-		const imageIsDataOrBlob = imageType === ImageTypes.DATA || imageType === ImageTypes.BLOB
-		const imageIsNormal = imageType === ImageTypes.NORMAL
+		switch (mediaElement.nodeName) {
+			case "VIDEO":
 
-		if (imageIsDataOrBlob) payload = { file: await MediaHelper.getFileFromUrl(url), tags: [tag] }
-		if (imageIsNormal) payload = { url, tags: [tag] }
-		if (!payload) throw new Error(`Invalid image type! url: ${url}`)
+				break;
+			case "IMG":
+				const imageType = MediaHelper.getImageTypeFromURL(url);
+
+				const imageIsDataOrBlob = imageType === ImageTypes.DATA || imageType === ImageTypes.BLOB
+				const imageIsNormal = imageType === ImageTypes.NORMAL
+
+				if (imageIsDataOrBlob) payload = { file: await MediaHelper.getFileFromUrl(url), tags: [tag] }
+				if (imageIsNormal) payload = { url, tags: [tag] }
+				break;
+			default:
+				throw new Error(`ERROR: unexpected mediaElement.nodeName is unexpected! mediaElement.nodeName: ${mediaElement.nodeName}`)
+		}
+		if (!payload) throw new Error(`Invalid payload!`)
 
 		// Send the payload.
 		communicator.sendMessage(payload);
