@@ -1,6 +1,13 @@
 import communicator, { Payload } from "../shared/utils/Communicator";
 import MediaHelper from "../shared/utils/MediaHelper";
 
+browser.webRequest.onBeforeRequest.addListener(
+	requestDetails => {
+		console.log(`Request: ${requestDetails.method} ${requestDetails.url}`);
+	},
+	{ urls: ["<all_urls>"] },
+);
+
 communicator.onMessage(async payload => {
 	console.log("payload", payload)
 
@@ -12,6 +19,8 @@ communicator.onMessage(async payload => {
 	await postToLocalhost(formData)
 })
 
+
+// HELPER FUNCITONS
 async function populateFormData(formData: FormData, payload: Payload) {
 	console.log("payload", payload)
 	// Add file
