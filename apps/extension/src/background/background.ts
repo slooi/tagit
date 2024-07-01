@@ -1,5 +1,5 @@
-import communicator, { Payload } from "../shared/utils/Communicator";
-import MediaHelper from "../shared/utils/MediaHelper";
+import communicator from "../shared/utils/Communicator";
+import MediaHelper, { Stages } from "../shared/utils/MediaHelper";
 
 browser.webRequest.onBeforeRequest.addListener(
 	requestDetails => {
@@ -8,33 +8,20 @@ browser.webRequest.onBeforeRequest.addListener(
 	{ urls: ["<all_urls>"] },
 );
 
+const mediaHelper = MediaHelper.getInstance(Stages.BACKGROUND_SCRIPT)
+
 communicator.onMessage(async payload => {
 	console.log("payload", payload)
 
 	// Create and populate formData 
 	const formData = new FormData()
-	await populateFormData(formData, payload)
+	await mediaHelper.populateFormData(formData, payload)
 
 	// Post
 	await postToLocalhost(formData)
 })
 
 
-// HELPER FUNCITONS
-async function populateFormData(formData: FormData, payload: Payload) {
-	console.log("payload", payload)
-	// Add file
-	if (payload.file) formData.append("files", payload.file)
-	if (payload.url) {
-		const file = await MediaHelper.getFileFromUrl(payload.url)
-		formData.append("files", file)
-	}
-
-	// Add tags
-	payload.tags.forEach(tag => {
-		formData.append("tags[]", tag)
-	})
-}
 
 async function postToLocalhost(formData: FormData) {
 	try {
