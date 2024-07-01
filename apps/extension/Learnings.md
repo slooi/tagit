@@ -42,7 +42,23 @@ formData.append("tags", tag)
 ```
 ```js
 formData.append("tags[]", tag)	
-``` 
+```
+
+7.
+Do the thing you want to do DIRECTLY!!! The code below is BAD! Originally, only the images were supposed to be loaded in the scripts, and the video was going to be left to the server to dl. However, this is just me using "video" or "nonvideo" as a proxy to either "download from server" or "download from content_script" or "download from background_script". You should get rid of proxies/objects which posses the functionlity, and instead just USE THE FUNCTIONALITY DIRECTLY. Composition over inheritance/OOP 
+```ts
+type Payload = XOR<
+	{
+		nonVideo: XOR<
+			{ url: string },
+			{ file: File }
+		>
+	},
+	{
+		video: { url: string }
+	}
+> | { tags: typeof tags[number][] }
+```
 		
 
 # ISSUES
