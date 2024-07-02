@@ -81,16 +81,12 @@ export default class MediaHelper {
 	}
 
 	public async potentiallyProcessPayload(payload: Payload) {
-		console.log("asdlkjasdlkjasldkjasldkj")
-		if (payload.stageToDownloadMedia === MediaHelper._stage) {
-			payload.file = await MediaHelper.getFileFromUrl(payload.url)
-			return
-		}
+		console.log("potentiallyProcessPayload ran")
 
-		//  else {
-		// 	console.log("asdlkjasdlkjasldkjasldkj")
-		// 	throw new Error(`NOT YET IMPLEMENTED. MediaHelper._stage: ${MediaHelper._stage}. payload: ${payload}`)
-		// }
+		// Exit if not time to process payload
+		if (payload.stageToDownloadMedia !== MediaHelper._stage) return
+
+		payload.file = await MediaHelper.getFileFromUrl(payload.url)
 	}
 
 	public async populateFormData(formData: FormData, payload: Payload) {
