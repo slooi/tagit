@@ -8,6 +8,7 @@ const mimeToExtensionDict = {
 	'image/webp': '.webp',
 	'image/svg+xml': '.svg',
 	'application/pdf': '.pdf',
+	'video/mp4': '.mp4'
 	// Add more mappings as needed
 }
 function mimeToExtension(mimeType: keyof typeof mimeToExtensionDict) {
