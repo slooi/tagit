@@ -81,12 +81,19 @@ export default class MediaHelper {
 	}
 
 	public async potentiallyProcessPayload(payload: Payload) {
-		console.log("potentiallyProcessPayload ran")
+		console.log("potentiallyProcessPayload ran", MediaHelper._stage)
 
 		// Exit if not time to process payload
 		if (payload.stageToDownloadMedia !== MediaHelper._stage) return
 
-		payload.file = await MediaHelper.getFileFromUrl(payload.url)
+		// Handle payload for all the different stages
+		if (payload.stageToDownloadMedia === Stages.CONTENT_SCRIPT || payload.stageToDownloadMedia === Stages.BACKGROUND_SCRIPT) {
+			payload.file = await MediaHelper.getFileFromUrl(payload.url)
+			return
+		}
+		if (payload.stageToDownloadMedia === Stages.SERVER) throw new Error("ERROR: NOT YET IMPLEMENTED! :d")
+
+		throw new Error("ERROR default switch case has NOT been implemented!")
 	}
 
 	public async populateFormData(formData: FormData, payload: Payload) {
@@ -94,8 +101,10 @@ export default class MediaHelper {
 
 		// Add files
 		await this.potentiallyProcessPayload(payload)
-		if (!payload.file) throw new Error("ERROR file does NOT exist!")
-		formData.append("files", payload.file)
+		if (payload.file) formData.append("files", payload.file)
+
+		formData.append("urls[]", payload.url)
+
 
 		// Add tags
 		payload.tags.forEach(tag => {
