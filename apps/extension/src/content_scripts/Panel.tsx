@@ -30,13 +30,13 @@ export default function Panel({ mediaElement }: PanelProps) {
 			url: url,
 			file: undefined
 		};
-		console.log("payload", payload)
+		console.log("payload", payload) //!@#!@# remove later
 		// Potentially process
 		await mediaHelper.potentiallyProcessPayload(payload)
 
-		console.log("communicator.sendMessage", communicator.sendMessage)
+		console.log("communicator.sendMessage", communicator.sendMessage) //!@#!@# remove later
 		// Send the payload.
-		communicator.sendMessage(payload);
+		communicator.sendMessage(payload)
 	}
 
 	return (
