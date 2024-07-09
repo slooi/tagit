@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Panel from "./Panel"
 
 // Types
-import { MediaElement } from "../shared/types/types"
+import { MediaElement } from "@tagit/shared"
 
 // Constants
 const SMALLEST_MEDIA_DIMENSION = 80

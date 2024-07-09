@@ -1,4 +1,4 @@
-import { ORANGE_ALPHA } from "../shared/constants/color.ts"
+import { ORANGE_ALPHA } from "@tagit/shared"
 
 type ButtonProps = {
 	text: string,

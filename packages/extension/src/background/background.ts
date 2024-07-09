@@ -1,5 +1,5 @@
-import communicator from "../shared/utils/Communicator";
-import MediaHelper, { Stages } from "../shared/utils/MediaHelper";
+import { communicator } from "@tagit/shared"
+import { MediaHelper, Stages } from "@tagit/shared"
 
 browser.webRequest.onBeforeRequest.addListener(
 	requestDetails => {

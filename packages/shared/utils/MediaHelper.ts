@@ -4,7 +4,7 @@
 // 		2) blob images. EG: blob:https://mangadex.org/7c3f6f93-79b2-4fc8-a407-1a381947181e
 // 		3) normal url images. EG: https://mangadex.org/covers/5f824f8d-664b-4e1d-8257-efa2b19c294a/e26e8b68-d101-4280-8f59-74692780bb9d.jpg.256.jpg
 
-import tags from "../constants/tags.config"
+import { tags } from "../constants/tags.config"
 
 export enum Stages {
 	CONTENT_SCRIPT = "CONTENT_SCRIPT",
@@ -29,7 +29,7 @@ export type Payload = {
 // 		blob images - get from content_script. You get errors from bg.js 
 // 		normal url images - get from background.js (cross origin)
 // 	*/
-export default class MediaHelper {
+export class MediaHelper {
 
 	private static _instance: MediaHelper;
 	private static _stage: Stages;

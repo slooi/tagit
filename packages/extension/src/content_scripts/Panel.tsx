@@ -1,10 +1,10 @@
-import { MediaElement } from "../shared/types/types.ts"
-import communicator from "../shared/utils/Communicator.ts"
+import { MediaElement } from "@tagit/shared"
+import { communicator } from "@tagit/shared"
 import DownloadButton from "./DownloadButton.tsx"
 
 // constants
-import tags from "../shared/constants/tags.config.ts"
-import MediaHelper, { Payload, Stages } from "../shared/utils/MediaHelper.ts"
+import { tags } from "@tagit/shared"
+import { MediaHelper, Payload, Stages } from "@tagit/shared"
 
 // 
 type PanelProps = {
