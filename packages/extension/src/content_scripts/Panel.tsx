@@ -27,7 +27,7 @@ export default function Panel({ mediaElement }: PanelProps) {
 		let payload: Payload = {
 			stageToDownloadMedia: MediaHelper.determineStageToDownloadMedia(mediaElement),
 			tags: [tag],
-			url: url,
+			url: MediaHelper.processUrlBasedOnSide(url),
 			file: undefined
 		};
 		console.log("payload", payload) //!@#!@# remove later

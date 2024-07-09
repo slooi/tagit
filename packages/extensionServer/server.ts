@@ -1,5 +1,7 @@
 import express from "express"
 import multer from "multer";
+import path from "path";
+import { promises as fsp } from "fs"
 
 const mimeToExtensionDict = {
 	'image/jpeg': '.jpg',
@@ -31,18 +33,7 @@ app.use((req, res, next) => {
 	next()
 })
 
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'uploads/')
-	},
-	filename: function (req, file, cb) {
-		console.log("filefilefilefile", file)
-		console.log("filefilefilefile")
-		cb(null, file.originalname.split(".")[0] + mimeToExtension(file.mimetype as keyof typeof mimeToExtensionDict)) // !@#!@#
-	}
-})
-
-const upload = multer({ storage: storage }); // Set up uploads directory
+const upload = multer({ dest: 'uploads/_' });
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -50,14 +41,40 @@ app.get("/", (req, res) => {
 	res.send("/ hit")
 })
 
-app.post("/save/attached-media", upload.array('files'), (req, res) => {
+app.post("/save/attached-media", upload.array('files'), async (req, res) => {
 	console.log("req.files")
 	console.log(req.files)
 	console.log("req.body ", req.body)
-	res.send('File uploaded successfully!');
+
+
+	console.log("req.body.tags[0]", req.body.tags[0])
+	const targetDir = path.resolve("uploads", req.body.tags[0])
+	console.log('targetDir', targetDir)
+
+	await ensureDirectoryExists(targetDir)
+
+	if (Array.isArray(req.files)) {
+		req.files.forEach(async (file: any) => {
+			const oldPath = file.path;
+			const newFilename = file.originalname.split(".")[0] + mimeToExtension(file.mimetype as keyof typeof mimeToExtensionDict);
+			const newPath = path.join(targetDir, newFilename);
+
+			await fsp.rename(oldPath, newPath)
+		});
+	}
+
+	res.send('Files uploaded and moved successfully!');
 })
 app.post("/save/external-media", (req, res) => {
 	res.send("external-media")
 })
 
 app.listen(PORT, () => console.log("Listening on port " + PORT))
+
+async function ensureDirectoryExists(dirPath: string): Promise<void> {
+	try {
+		await fsp.access(dirPath);
+	} catch (error) {
+		await fsp.mkdir(dirPath, { recursive: true });
+	}
+}

@@ -54,7 +54,9 @@ export class MediaHelper {
 		} catch (err) { throw new Error("ERROR while trying to get file from url!") }
 	}
 
-
+	public static processUrlBasedOnSide(url: string) {
+		return url.replace(/\&name\=.*$/, "&name=4096x4096")
+	}
 
 	/* 
 	HELPER FUNCTIONS   probably move into utils class later
