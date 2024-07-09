@@ -1,1 +1,1 @@
-export const tags = ["just nice", "ro just nice", "inspiration", "ro inspiration", "real drawing resources", "nh real drawing res", "programming inspiration"] as const
+export const tags = ["copy", "copy2", "copy cache", "copy pose", "poses", "chibi", "just nice", "ro just nice", "inspiration", "ro inspiration", "drawing resources", "nh real drawing res", "nh drawing resources", "real drawing resources", "inspiration smile", "inspiration design", "programming inspiration", "drawing_business"] as const

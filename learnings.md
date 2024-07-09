@@ -5,3 +5,11 @@
 - VALIDATE all previous step were done correctly `pnpm ls -r -depth -1`
 - install it into another pkg: `pnpm --filter extension i @tagit/shared --workspace` <= make sure it's not `tagit@shared` lol
 - You can valide correct installation by checking the `node_modules` and the `package.json`
+
+2. When making extensions remember to install
+"@types/firefox-webext-browser": "^120.0.4",
+"@types/node": 
+
+
+# Improvements for the future
+1. Need something better than chokidar. I need something which is more efficient and faster.
