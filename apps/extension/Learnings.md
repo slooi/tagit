@@ -59,7 +59,12 @@ type Payload = XOR<
 	}
 > | { tags: typeof tags[number][] }
 ```
-		
+
+8.
+My method of watching code for transpiling is bad.  `chokidar` is just a adhoc solution. A better solution would be something which re-transpiles every time a file/folder that's connected to an entry is updated.
+
+9.
+How do I create my own monorepo? As when my typescript code is outside one of the app folders I start getting issues
 
 # ISSUES
 1. Because `import` keywords aren't allowed in the javascript content_script, I have to bundle `content_script.tsx` with the imported react code. Make two `vite.config.___.ts` files and make the `content_script.tsx` vite file have `inlineDynamicImports: true`
