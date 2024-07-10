@@ -37,6 +37,24 @@ export default function Panel({ mediaElement }: PanelProps) {
 		console.log("communicator.sendMessage", communicator.sendMessage) //!@#!@# remove later
 		// Send the payload.
 		communicator.sendMessage(payload)
+
+
+		// Check if full screen image
+		const isFullScreened = document.querySelectorAll("[data-testid=mask]")[0] as HTMLElement | undefined
+		if (isFullScreened) {
+			const image = document.querySelectorAll('[alt=Image]')[0] as HTMLElement | undefined
+			const retweetButton = document.querySelectorAll('[data-testid="retweet"]')[0] as HTMLElement | undefined
+			const commonParent = findCommonParent(image, retweetButton)
+			const likes = commonParent?.querySelectorAll('[data-testid="like"]')[0] as HTMLElement | undefined
+			// Like the image
+			likes?.click()
+		} else {
+			// Like the image
+			const likeButton = document.querySelectorAll("[data-testid=tweet]")[0].querySelectorAll("[data-testid=like]")[0] as HTMLElement | undefined
+			if (likeButton) {
+				likeButton.click()
+			}
+		}
 	}
 
 	return (
@@ -52,4 +70,16 @@ export default function Panel({ mediaElement }: PanelProps) {
 				))}
 			</div>
 		</>)
+}
+
+
+function findCommonParent(e0: HTMLElement | undefined, e1: HTMLElement | undefined) {
+	if (!e1) return undefined
+
+	let e0Ancestor: HTMLElement | undefined = e0
+	while (e0Ancestor !== undefined) {
+		if (e0Ancestor.contains(e1)) return e0Ancestor
+		e0Ancestor = e0Ancestor.parentElement ? e0Ancestor.parentElement : undefined
+	}
+	return undefined
 }
