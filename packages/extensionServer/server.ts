@@ -47,7 +47,6 @@ app.post("/save/attached-media", upload.array('files'), async (req, res) => {
 	console.log("req.body ", req.body)
 
 
-	console.log("req.body.tags[0]", req.body.tags[0])
 	const targetDir = path.resolve("uploads", req.body.tags[0])
 	console.log('targetDir', targetDir)
 
