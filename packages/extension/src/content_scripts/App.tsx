@@ -63,5 +63,5 @@ function filterForLargestImageOnScreen<T extends MediaElement>(mediaElements: T[
 }
 
 function boxCollision(x0: number, y0: number, w0: number, h0: number, x1: number, y1: number, w1: number, h1: number) {
-	return (x0 + 30 < x1 + w1 && y0 + 30 < y1 + h1 && x0 + w0 - 30 > x1 && y0 + h0 - 30 > y1) ? true : false
+	return (x0 + 400 < x1 + w1 && y0 + 400 < y1 + h1 && x0 + w0 - 400 > x1 && y0 + h0 - 400 > y1) ? true : false
 }
