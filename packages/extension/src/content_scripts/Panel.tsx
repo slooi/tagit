@@ -56,13 +56,16 @@ export default function Panel({ mediaElement }: PanelProps) {
 			}
 		}
 	}
-
+	const PREVENT_OVERFLOW = true
 	return (
 		<>
 			<div style={{
 				position: "absolute",
 				top: boudingClientRect.y + scrollY,
 				left: boudingClientRect.x + scrollX,
+				// backgroundColor: "pink",
+				overflowY: PREVENT_OVERFLOW ? "hidden" : "auto",
+				height: PREVENT_OVERFLOW ? mediaElement.getBoundingClientRect().height + "px" : "auto"
 			}}
 			>
 				{tags.map(tag => (
