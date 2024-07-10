@@ -17,7 +17,7 @@ export default function DownloadButton({ text, callback, mediaElement }: ButtonP
 		<>
 			<button style={{
 				border: mediaElement instanceof HTMLVideoElement ? "2px dashed rgba(0,0,0,0.6)" : "1px solid black",
-				backgroundColor: mediaElement.src.startsWith("blob:") ? ORANGE_ALPHA : "rgba(180,180,180,0.6)",
+				backgroundColor: mediaElement.src.startsWith("blob:") ? ORANGE_ALPHA : "rgba(200,200,200,0.8)",
 				margin: "0px",
 				padding: "0px",
 				fontSize: "14px",
