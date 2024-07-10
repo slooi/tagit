@@ -38,21 +38,10 @@ export default function Panel({ mediaElement }: PanelProps) {
 		// Send the payload.
 		communicator.sendMessage(payload)
 
-
-		// Check if full screen image
-		const isFullScreened = document.querySelectorAll("[data-testid=mask]")[0] as HTMLElement | undefined
-		if (isFullScreened) {
-			const image = document.querySelectorAll('[alt=Image]')[0] as HTMLElement | undefined
-			const retweetButton = document.querySelectorAll('[data-testid="retweet"]')[0] as HTMLElement | undefined
-			const commonParent = findCommonParent(image, retweetButton)
-			const likes = commonParent?.querySelectorAll('[data-testid="like"]')[0] as HTMLElement | undefined
-			// Like the image
-			likes?.click()
-		} else {
-			// Like the image
-			const likeButton = findClosestRepostsAttrEl(mediaElement)?.querySelectorAll("[data-testid=like]")[0] as HTMLElement | undefined
-			if (likeButton) likeButton.click()
-		}
+		// Like the image
+		const commonParent = findCommonParentQuerySelector(mediaElement, '[role=button][data-testid="retweet"]')
+		const likeBtn = commonParent?.querySelectorAll('[data-testid="like"]')[0] as HTMLElement | undefined
+		likeBtn?.click()
 	}
 	const PREVENT_OVERFLOW = true
 	return (
@@ -73,14 +62,13 @@ export default function Panel({ mediaElement }: PanelProps) {
 		</>)
 }
 
-function findClosestRepostsAttrEl(el: HTMLElement | undefined) {
+function findClosestRetweetBtn(el: HTMLElement | undefined) {
 	let foundElements = []
 	let elementAncestor: HTMLElement | undefined = el
 	if (!elementAncestor) throw new Error("elementAncestor is undefined!")
 	let numberOfChecks = 0
 	while (true) {
-		foundElements = [...elementAncestor.querySelectorAll("[aria-label*='reposts']")] as (HTMLElement[] | [])
-		console.log("foundElements", foundElements)
+		foundElements = [...elementAncestor.querySelectorAll("[role='button'][data-testid='retweet']")] as (HTMLElement[] | [])
 		if (foundElements.length > 0) return foundElements[0]
 		if (numberOfChecks > 200) throw new Error("ERROR: COULD NOT FIND CLOSEST REPOSTS")
 		elementAncestor = elementAncestor.parentElement ? elementAncestor.parentElement : undefined
@@ -89,6 +77,14 @@ function findClosestRepostsAttrEl(el: HTMLElement | undefined) {
 	}
 }
 
+function findCommonParentQuerySelector(e0: HTMLElement | undefined, query: string) {
+	let e0Ancestor: HTMLElement | undefined = e0
+	while (e0Ancestor !== undefined) {
+		if (e0Ancestor.querySelectorAll(query).length > 0) return e0Ancestor
+		e0Ancestor = e0Ancestor.parentElement ? e0Ancestor.parentElement : undefined
+	}
+	return undefined
+}
 function findCommonParent(e0: HTMLElement | undefined, e1: HTMLElement | undefined) {
 	if (!e1) return undefined
 
