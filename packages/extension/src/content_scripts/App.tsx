@@ -10,9 +10,9 @@ const LARGEST_MEDIA_DIMENSION = 150
 
 export default function App() {
 	const [mediaElements, setMediaElement] = useState<MediaElement[]>(getMediaElements())
-	const [showPanels, setShowPanels] = useState(true)
+	const [showPanels, setShowPanels] = useState(false)
 	const keyHandler = (e: KeyboardEvent, isDown: boolean) => {
-		if (e.key === "Alt" && isDown) setShowPanels(!showPanels)
+		if (e.key === "Alt" && !isDown) setShowPanels(!showPanels)
 	}
 	window.addEventListener("keydown", e => keyHandler(e, true))
 	window.addEventListener("keyup", e => keyHandler(e, false))
