@@ -38,10 +38,13 @@ export default function Panel({ mediaElement }: PanelProps) {
 		// Send the payload.
 		communicator.sendMessage(payload)
 
-		// Like the image
-		const commonParent = findCommonParentQuerySelector(mediaElement, '[role=button][data-testid="retweet"]')
-		const likeBtn = commonParent?.querySelectorAll('[data-testid="like"]')[0] as HTMLElement | undefined
-		likeBtn?.click()
+		// Like the image if on x/twitter domain
+		if (window.origin.replace(/^.*\:\/\//, "") === "x.com" || window.origin.replace(/^.*\:\/\//, "") === "twitter.com") {
+			const commonParent = findCommonParentQuerySelector(mediaElement, '[role=button][data-testid="retweet"]')
+			if (!commonParent) console.warn("WARNING: no common parent found for this element", mediaElement)
+			const likeBtn = commonParent?.querySelectorAll('[data-testid="like"]')[0] as HTMLElement | undefined
+			likeBtn?.click()
+		}
 	}
 	const PREVENT_OVERFLOW = true
 	return (
