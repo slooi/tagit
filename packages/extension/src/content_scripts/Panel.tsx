@@ -65,35 +65,10 @@ export default function Panel({ mediaElement }: PanelProps) {
 		</>)
 }
 
-function findClosestRetweetBtn(el: HTMLElement | undefined) {
-	let foundElements = []
-	let elementAncestor: HTMLElement | undefined = el
-	if (!elementAncestor) throw new Error("elementAncestor is undefined!")
-	let numberOfChecks = 0
-	while (true) {
-		foundElements = [...elementAncestor.querySelectorAll("[role='button'][data-testid='retweet']")] as (HTMLElement[] | [])
-		if (foundElements.length > 0) return foundElements[0]
-		if (numberOfChecks > 200) throw new Error("ERROR: COULD NOT FIND CLOSEST REPOSTS")
-		elementAncestor = elementAncestor.parentElement ? elementAncestor.parentElement : undefined
-		if (!elementAncestor) throw new Error("ERROR: elementAncestor is undefined!")
-		numberOfChecks++
-	}
-}
-
 function findCommonParentQuerySelector(e0: HTMLElement | undefined, query: string) {
 	let e0Ancestor: HTMLElement | undefined = e0
 	while (e0Ancestor !== undefined) {
 		if (e0Ancestor.querySelectorAll(query).length > 0) return e0Ancestor
-		e0Ancestor = e0Ancestor.parentElement ? e0Ancestor.parentElement : undefined
-	}
-	return undefined
-}
-function findCommonParent(e0: HTMLElement | undefined, e1: HTMLElement | undefined) {
-	if (!e1) return undefined
-
-	let e0Ancestor: HTMLElement | undefined = e0
-	while (e0Ancestor !== undefined) {
-		if (e0Ancestor.contains(e1)) return e0Ancestor
 		e0Ancestor = e0Ancestor.parentElement ? e0Ancestor.parentElement : undefined
 	}
 	return undefined
