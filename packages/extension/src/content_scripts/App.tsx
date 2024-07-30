@@ -26,10 +26,18 @@ export default function App() {
 		}) as MediaElement[]
 	}
 
+	const updateMediaElements = () => {
+		setMediaElement(getMediaElements())
+	}
+
 	useEffect(() => {
-		const interval = setInterval(() => { setMediaElement(getMediaElements()) }, 100)
-		return () => clearTimeout(interval)
-	}, [])
+		if (!showPanels) return
+
+		updateMediaElements()
+		const interval = setInterval(updateMediaElements, 100)
+		return () => clearInterval(interval)
+
+	}, [showPanels])
 
 	const hasTwitterOverlay = document.querySelectorAll("[data-testid=mask]")[0]
 	return (<>
