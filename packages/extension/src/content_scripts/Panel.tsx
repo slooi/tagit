@@ -62,7 +62,8 @@ export default function Panel({ mediaElement }: PanelProps) {
 					<DownloadButton key={tag} text={tag} callback={() => sendPayloadToBackground(tag)} mediaElement={mediaElement} />
 				))}
 			</div>
-		</>)
+		</>
+	)
 }
 
 function findCommonParentQuerySelector(e0: HTMLElement | undefined, query: string) {
