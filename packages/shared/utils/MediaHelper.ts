@@ -83,7 +83,7 @@ export class MediaHelper {
 	}
 
 	public async potentiallyProcessPayload(payload: Payload) {
-		console.log("potentiallyProcessPayload ran", MediaHelper._stage)
+		console.log("potentiallyProcessPayload ran in stage:", MediaHelper._stage, "url:", payload.url)
 
 		// Exit if not time to process payload
 		if (payload.stageToDownloadMedia !== MediaHelper._stage) return
