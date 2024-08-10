@@ -7,18 +7,29 @@ browser.webRequest.onBeforeRequest.addListener(
 	},
 	{ urls: ["<all_urls>"] },
 );
-
+browser.webRequest.onBeforeSendHeaders.addListener(
+	function (details) {
+		let newHeaders = details?.requestHeaders?.filter(header => header.name.toLowerCase() !== 'referer');
+		newHeaders?.push({ name: 'Referer', value: 'https://i.pximg.net/' });
+		return { requestHeaders: newHeaders };
+	},
+	{ urls: ["https://*.pximg.net/*"] },
+	["blocking", "requestHeaders"]
+);
 const mediaHelper = MediaHelper.getInstance(Stages.BACKGROUND_SCRIPT)
 
 communicator.onMessage(async payload => {
 	console.log("payload", payload)
+	try {
+		// Create and populate formData 
+		const formData = new FormData()
+		await mediaHelper.populateFormData(formData, payload)
 
-	// Create and populate formData 
-	const formData = new FormData()
-	await mediaHelper.populateFormData(formData, payload)
-
-	// Post
-	await postToLocalhost(formData)
+		// Post
+		await postToLocalhost(formData)
+	} catch (err) {
+		throw new Error("ERROR: while during to `populate and postToLocalhost`. info: " + err)
+	}
 })
 
 
