@@ -53,9 +53,11 @@ app.post("/save/attached-media", upload.array('files'), async (req, res) => {
 	await ensureDirectoryExists(targetDir)
 
 	if (Array.isArray(req.files)) {
-		req.files.forEach(async (file: any) => {
+		req.files.forEach(async (file) => {
 			const oldPath = file.path;
-			const newFilename = file.originalname.split(".")[0] + mimeToExtension(file.mimetype as keyof typeof mimeToExtensionDict);
+			const nameSplit = file.originalname.split(".")
+			console.log("nameSplit", nameSplit)
+			const newFilename = (nameSplit.length > 2 ? file.originalname.split(".").slice(0, -1).join(".") : file.originalname.split(".")[0]) + mimeToExtension(file.mimetype as keyof typeof mimeToExtensionDict);
 			const newPath = path.join(targetDir, newFilename);
 
 			await fsp.rename(oldPath, newPath)
