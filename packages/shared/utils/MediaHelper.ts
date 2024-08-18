@@ -48,13 +48,18 @@ export class MediaHelper {
 		try {
 			// Get file
 			const blob = await (await fetch(url)).blob()
+			console.log("blob.size\n", blob.size)
+			if (blob.type === "text/html") throw new Error("RECEIVED TEXT/HTML!!!")
 			const file = new File([blob], MediaHelper.getImageNameFromUrl(url), { type: blob.type })
 
 			return file
-		} catch (err) { throw new Error("ERROR while trying to get file from url!") }
+		} catch (err) { throw new Error("ERROR while trying to get file from url!" + err) }
 	}
 
 	public static processUrlBasedOnSide(url: string) {
+		// https://i.pximg.net/img-original/img/2024/07/16/20/31/38/120413856_p1.jpg
+		// https://i.pximg.net/img-master/img/2024/07/16/20/31/38/120413856_p1_master1200.jpg
+		if (url.match(/pximg.net/)) return url.replace(/img-master(.*?)_master\d+(.*?)/, "img-original$1$2")
 		return url.replace(/\&name\=.*$/, "&name=4096x4096")
 	}
 
@@ -91,6 +96,7 @@ export class MediaHelper {
 		// Handle payload for all the different stages
 		if (payload.stageToDownloadMedia === Stages.CONTENT_SCRIPT || payload.stageToDownloadMedia === Stages.BACKGROUND_SCRIPT) {
 			payload.file = await MediaHelper.getFileFromUrl(payload.url)
+			console.log("payload.file set to:", payload.file)
 			return
 		}
 		if (payload.stageToDownloadMedia === Stages.SERVER) throw new Error("ERROR: NOT YET IMPLEMENTED! :d")
