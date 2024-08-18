@@ -11,7 +11,9 @@ reactRoot.style.left = "0px"
 reactRoot.style.zIndex = "10000000"
 reactRoot.style.width = "100%"
 
-// reactRoot.style.pointerEvents = "none" // forgot what this was for lol
+// This allows you to click the image underneath the buttonContainer. Without this you can't click the img if the 
+//buttonContainer is in the way
+reactRoot.style.pointerEvents = "none"
 
 if (!body) throw new Error("ERROR: body does not exist!")
 body.prepend(reactRoot)
