@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App'
 const body = document.querySelector('body')
 const reactRoot = document.createElement('div')
-reactRoot.id = '___react-root___'
+reactRoot.id = 'content-script-root'
 
 // Styles
 reactRoot.style.position = "absolute"
@@ -11,7 +11,7 @@ reactRoot.style.left = "0px"
 reactRoot.style.zIndex = "10000000"
 reactRoot.style.width = "100%"
 
-reactRoot.style.pointerEvents = "none"
+// reactRoot.style.pointerEvents = "none" // forgot what this was for lol
 
 if (!body) throw new Error("ERROR: body does not exist!")
 body.prepend(reactRoot)
