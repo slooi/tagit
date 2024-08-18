@@ -1,4 +1,5 @@
 import { ORANGE_ALPHA } from "@tagit/shared"
+import "./style.css"
 
 type ButtonProps = {
 	text: string,
@@ -15,7 +16,11 @@ export default function DownloadButton({ text, callback, mediaElement }: ButtonP
 	console.log("isDarkMode()", isDarkMode())
 	return (
 		<>
-			<button style={{
+			<button className={"buttonSpecial"} onClick={onClick}
+			>{text}
+			</button>
+			{/* 
+			{
 				border: mediaElement instanceof HTMLVideoElement ? "2px dashed rgba(0,0,0,0.6)" : "1px solid black",
 				backgroundColor: mediaElement.src.startsWith("blob:") ? ORANGE_ALPHA : isDarkMode() ? "rgba(110,110,110,0.7)" : "rgba(200,200,200,0.7)",
 				margin: "0px",
@@ -23,9 +28,8 @@ export default function DownloadButton({ text, callback, mediaElement }: ButtonP
 				fontSize: "14px",
 				pointerEvents: "auto",
 				display: "block"
-			}} onClick={onClick}
-			>{text}
-			</button>
+			}
+			*/}
 		</>
 	)
 }

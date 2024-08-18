@@ -1,0 +1,12 @@
+.buttonSpecial {
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	pointer-events: auto;
+	display: block;
+
+}
+
+.buttonSpecial:hover {
+	background-color: blue;
+}
